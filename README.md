@@ -43,7 +43,7 @@ Send HTML Emails using this: https://www.thunderbird.net/en-US/
 [Image hosting](Google drive)
 [lightshot create QR code](https://www.lightshot.org/en/create-qr-code)
 
-https://drive.google.com/u/0/uc?id=`[insert id]`export=view
+https://drive.google.com/u/0/uc?id=`[insert id]`&export=view
 id can be found in the url here
 
 ## Getting started Guide
@@ -52,7 +52,10 @@ id can be found in the url here
 
 1. Emails have a width of 660px
 2. Outlook dose not support max width, margin, display inline block
-3.
+3. Since outlook is unpredictable with margins we use a spacer element
+4. Since outlook is unpredictable with margins we use h1 and p tags since margin is supported for these tags, we also want to specify a font-family since email clients will override if we don't have on on the element level  
+5. We favor divs over tables 
+6. Remember padding on the left and right should be the same since when things stack on mobile they look the same on both sides 
 
 #### 1. Intro
 
@@ -89,7 +92,7 @@ Definition: `fluid` refers to using `%` and elements that expand to fill there s
 
 9. Lastly we include a big wrapper table to help center the main content. We always set the role to presentation.
 
-```html
+```html  
 <!DOCTYPE html>
 <html
   lang="en"
@@ -112,13 +115,7 @@ Definition: `fluid` refers to using `%` and elements that expand to fill there s
           border-spacing: 0;
           margin: 0;
         }
-        div,
-        td {
-          padding: 0;
-        }
-        div {
-          margin: 0 !important;
-        }
+        div, td {padding: 0;} div {margin: 0 !important;}
       </style>
       <noscript>
         <xml>
@@ -176,6 +173,76 @@ Note: margin
 ```
 
 #### 3. Banner / Single Column
+At this point we have setup our outer structure. Now it is time to add some content!!!
+**We usually favor `<div>` tags over `<table>` tags but for this single column we will use `<table>` instead of a `<div>` tag with a ghost table.** since it saves code.
+1. Recall we have `role="presentation"` for all tables 
+2. In `<td>` We have padding of 10px on all sides with extra at the bottom. If it contains test use `text-align:left;` so some clients would inherit from the wrapper `<td>` align center  
+3. `<img>` tag `width:100%;height:auto;` so the image is 100% wide and always preserves its aspect ratio
 
-At this point we have setup our outer structure.
-Now it is time to add some content!!!
+
+
+
+```html
+<table role="presentation" style="width:100%;border:0;border-spacing:0;">
+    <tr>
+        <td style="padding:10px 10px 20px 10px;font-family:Arial,sans-serif;font-size:24px;line-height:28px;font-weight:bold;">
+            <img src="banner.png" width="640" alt="" style="width:100%;height:auto;" />
+        </td>
+    </tr>
+    <tr>
+        <td style="padding:10px;text-align:left;">
+            <h1 style="margin-top:0;margin-bottom:16px;font-family:Arial,sans-serif;font-size:26px;line-height:32px;font-weight:bold;">Email Title</h1>
+            <p style="margin:0;font-family:Arial,sans-serif;font-size:18px;line-height:24px;">This is email is is created using a FLuid Hybrid approach </p>
+        </td>
+    </tr>
+</table>
+```
+
+#### 4.The spacer 
+
+
+The spacer element since outlook margins can be unpredictable 
+```html
+<div class="spacer" style="line-height:26px;height:26px;mso-line-height-rule:exactly;">&nbsp;</div>
+```
+
+#### 5. Two-Column Layout that will be centered on mobile 
+
+
+
+
+
+
+
+
+
+
+
+
+
+```html
+<div class="two-col">
+    <!--[if mso]>
+    <table role="presentation" width="100%">
+    <tr>
+    <td style="width:50%;">
+    <![endif]-->
+    <div class="column">
+        [content goes here]
+    </div>
+    <!--[if mso]>
+    </td>
+    <td style="width:50%;">
+    <![endif]-->
+    <div class="column">
+        [content goes here]
+    </div>
+    <!--[if mso]>
+    </td>
+    </tr>
+    </table>
+    <![endif]-->
+</div>
+
+
+```
