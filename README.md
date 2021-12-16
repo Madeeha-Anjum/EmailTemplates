@@ -53,10 +53,9 @@ id can be found in the url here
 1. Emails have a width of 660px
 2. Outlook dose not support max width, margin, display inline block
 3. Since outlook is unpredictable with margins we use a spacer element
-4. Since outlook is unpredictable with margins we use h1 and p tags since margin is supported for these tags, we also want to specify a font-family since email clients will override if we don't have on on the element level  
-5. We favor divs over tables 
-6. Remember padding on the left and right should be the same since when things stack on mobile they look the same on both sides 
- 
+4. Since outlook is unpredictable with margins we use h1 and p tags since margin is supported for these tags, we also want to specify a font-family since email clients will override if we don't have on on the element level
+5. We favor divs over tables
+6. Remember padding on the left and right should be the same since when things stack on mobile they look the same on both sides
 
 #### 1. Intro
 
@@ -93,7 +92,7 @@ Definition: `fluid` refers to using `%` and elements that expand to fill there s
 
 9. Lastly we include a big wrapper table to help center the main content. We always set the role to presentation.
 
-```html  
+```html
 <!DOCTYPE html>
 <html
   lang="en"
@@ -116,7 +115,13 @@ Definition: `fluid` refers to using `%` and elements that expand to fill there s
           border-spacing: 0;
           margin: 0;
         }
-        div, td {padding: 0;} div {margin: 0 !important;}
+        div,
+        td {
+          padding: 0;
+        }
+        div {
+          margin: 0 !important;
+        }
       </style>
       <noscript>
         <xml>
@@ -174,81 +179,104 @@ Note: margin
 ```
 
 #### 3. Banner / Single Column
+
 At this point we have setup our outer structure. Now it is time to add some content!!!
 **We usually favor `<div>` tags over `<table>` tags but for this single column we will use `<table>` instead of a `<div>` tag with a ghost table.** since it saves code.
-1. Recall we have `role="presentation"` for all tables 
-2. In `<td>` We have padding of 10px on all sides with extra at the bottom. If it contains test use `text-align:left;` so some clients would inherit from the wrapper `<td>` align center  
+
+1. Recall we have `role="presentation"` for all tables
+2. In `<td>` We have padding of 10px on all sides with extra at the bottom. If it contains test use `text-align:left;` so some clients would inherit from the wrapper `<td>` align center
 3. `<img>` tag `width:100%;height:auto;` so the image is 100% wide and always preserves its aspect ratio
-
-
-
 
 ```html
 <table role="presentation" style="width:100%;border:0;border-spacing:0;">
-    <tr>
-        <td style="padding:10px 10px 20px 10px;font-family:Arial,sans-serif;font-size:24px;line-height:28px;font-weight:bold;">
-            <img src="banner.png" width="640" alt="" style="width:100%;height:auto;" />
-        </td>
-    </tr>
-    <tr>
-        <td style="padding:10px;text-align:left;">
-            <h1 style="margin-top:0;margin-bottom:16px;font-family:Arial,sans-serif;font-size:26px;line-height:32px;font-weight:bold;">Email Title</h1>
-            <p style="margin:0;font-family:Arial,sans-serif;font-size:18px;line-height:24px;">This is email is is created using a Fluid Hybrid approach </p>
-        </td>
-    </tr>
+  <tr>
+    <td
+      style="padding:10px 10px 20px 10px;font-family:Arial,sans-serif;font-size:24px;line-height:28px;font-weight:bold;"
+    >
+      <img
+        src="banner.png"
+        width="640"
+        alt=""
+        style="width:100%;height:auto;"
+      />
+    </td>
+  </tr>
+  <tr>
+    <td style="padding:10px;text-align:left;">
+      <h1
+        style="margin-top:0;margin-bottom:16px;font-family:Arial,sans-serif;font-size:26px;line-height:32px;font-weight:bold;"
+      >
+        Email Title
+      </h1>
+      <p
+        style="margin:0;font-family:Arial,sans-serif;font-size:18px;line-height:24px;"
+      >
+        This is email is is created using a Fluid Hybrid approach
+      </p>
+    </td>
+  </tr>
 </table>
 ```
 
-#### 4.The spacer 
+#### 4.The spacer
 
+The spacer element since outlook margins can be unpredictable
 
-The spacer element since outlook margins can be unpredictable 
 ```html
-<div class="spacer" style="line-height:26px;height:26px;mso-line-height-rule:exactly;">&nbsp;</div>
+<div
+  class="spacer"
+  style="line-height:26px;height:26px;mso-line-height-rule:exactly;"
+>
+  &nbsp;
+</div>
 ```
 
-#### 5. Two-Column Layout that will be centered on mobile 
-The container 
+#### 5. Two-Column Layout that will be centered on mobile
+
+The container
+
 1. The `font-size` on the container is set to 0 to make sure no extra spaces make our containers stack
-2. The test-align is set to center so the containers are stacked and centered on mobile but in-order to make then stack we need display-inline-block ono the cells 
+2. The test-align is set to center so the containers are stacked and centered on mobile but in-order to make then stack we need display-inline-block ono the cells
 
 The 2 cells:
-1. `display-inline-block` so they stack on mobile and follow the containers text align property  
+
+1. `display-inline-block` so they stack on mobile and follow the containers text align property
 2. To make the cells have 100% width on on mobile and a max of 330px (aka 660/2): `width:100%;max-width:330px`
 3. We can also vertically align the cells by setting `vertical-align:top`
 
 The 2 ghost cells
+
 1. We have 2 cells that are `width:50%` and `width:50%` in outlook
 2. `valign="middle"` to match the `vertical align: top`
 3. Lastly some padding for outlook `padding:10px`
 
-
 Last note: box-sizing: border-box; is not supported (this allows padding on the inside of the container)
 The way we solve this issue is by nesting an extra div inside with the padding so the cells now become 310px wide and centered on mobile.
- 
 
 ```html
 <div class="two-col" style="text-align:center;font-size:0">
-    <!--[if mso]>
+  <!--[if mso]>
     <table role="presentation" width="100%">
     <tr>
       <td style="width:50%;padding:10px;" valign="middle">
     <![endif]-->
-    <div class="column" style="width:100%;max-width:330px;display:inline-block;vertical-align:top">
-        <div style="padding:10px;">
-          [content goes here]
-        </div>
-    </div>
-    <!--[if mso]>
+  <div
+    class="column"
+    style="width:100%;max-width:330px;display:inline-block;vertical-align:top"
+  >
+    <div style="padding:10px;">[content goes here]</div>
+  </div>
+  <!--[if mso]>
     </td>
       <td style="width:50%;padding:10px;" valign="middle">
     <![endif]-->
-    <div class="column" style="width:100%;max-width:330px;display:inline-block;vertical-align:top">
-        <div style="padding:10px;">
-          [content goes here]
-        </div>
-    </div>
-    <!--[if mso]>
+  <div
+    class="column"
+    style="width:100%;max-width:330px;display:inline-block;vertical-align:top"
+  >
+    <div style="padding:10px;">[content goes here]</div>
+  </div>
+  <!--[if mso]>
     </td>
     </tr>
     </table>
@@ -256,55 +284,129 @@ The way we solve this issue is by nesting an extra div inside with the padding s
 </div>
 ```
 
+#### 6. Two-Column Layout with Fluid Hybrid Image and text
 
-#### 6. Two-Column Layout with Fluid Hybrid Image and text 
 **image**
-1. Wrap images in `<p>` tags so we can add margins 
-2. The images have a width of 310px since thats all the space available in the col 
-  - width="310" for outlook
-  -  style="width:310px" for other clients
+
+1. Wrap images in `<p>` tags so we can add margins
+2. The images have a width of 310px since thats all the space available in the col
+
+- width="310" for outlook
+- style="width:310px" for other clients
+
 3. display:block; to prevent gaps under images
 4. `max-width:100%;` always 100% of the column width
 5. `height:auto;` to prevent stretching the image
 6. Note: if your image is smaller than 310px use that width instead; or your image will be stretched.
-    - keep gaps under image:  using `text-align` on the p tag and remove the `display block` on the image
-    - get rid of gaps on the image: Keep the `display block` and add `margin auto` to the image and add `text align` to the parent | so the gaps at the bottom are gone but its still aligned horizontally 
-   
+   - keep gaps under image: using `text-align` on the p tag and remove the `display block` on the image
+   - get rid of gaps on the image: Keep the `display block` and add `margin auto` to the image and add `text align` to the parent | so the gaps at the bottom are gone but its still aligned horizontally
+
 Note: pixel max-widths on img tags are not supported by outlook so we will use `max-width:100%`
 
 ```html
-<p style="margin:0;font-family:Arial,sans-serif;font-size:14px;line-height:18px;">
-    <img src="two-column-01.png" width="310" alt="" style="display:block;width:310px;max-width:100%;height:auto;" />
+<p
+  style="margin:0;font-family:Arial,sans-serif;font-size:14px;line-height:18px;"
+>
+  <img
+    src="two-column-01.png"
+    width="310"
+    alt=""
+    style="display:block;width:310px;max-width:100%;height:auto;"
+  />
 </p>
-
 ```
+
 **text**
-1.  outer div sets the text size
-2.  
+
+1.  Outer div sets the text size
+2.
 
 ```html
 <div style="padding:10px;font-size:14px;line-height:18px;text-align:left;">
-    <p style="margin-top:0;margin-bottom:12px;font-family:Arial,sans-serif;font-weight:bold;">
-     Some cool text
-    </p>
-    <p style="margin-top:0;margin-bottom:14px;font-family:Arial,sans-serif;">
-      Some more awesome text!
-    </p>
-    <p style="margin:0;font-family:Arial,sans-serif;">
-       <a href="https://example.com/" style="background: #ffffff; border: 2px solid #8dc1d6; text-decoration: none; padding: 10px 25px; color: #000000; border-radius: 4px; display:inline-block; mso-padding-alt:0;text-underline-color:#ffffff">
-          <!--[if mso]>
-          <i style="letter-spacing: 25px;mso-font-width:-100%;mso-text-raise:20pt">&nbsp;</i>
-          <![endif]-->
-          <span style="mso-text-raise:10pt;font-weight:bold;">
-          Claim yours now
-          </span>
-          <!--[if mso]>
-          <i style="letter-spacing: 25px;mso-font-width:-100%">&nbsp;</i>
-          <![endif]-->
-       </a>
-    </p>
+  <p
+    style="margin-top:0;margin-bottom:12px;font-family:Arial,sans-serif;font-weight:bold;"
+  >
+    Some cool text
+  </p>
+  <p style="margin-top:0;margin-bottom:14px;font-family:Arial,sans-serif;">
+    Some more awesome text!
+  </p>
+  <p style="margin:0;font-family:Arial,sans-serif;">
+    <a
+      href="https://example.com/"
+      style="background: #ffffff; border: 2px solid #8dc1d6; text-decoration: none; padding: 10px 25px; color: #000000; border-radius: 4px; display:inline-block; mso-padding-alt:0;text-underline-color:#ffffff"
+    >
+      <!--[if mso]>
+        <i style="letter-spacing: 25px;mso-font-width:-100%;mso-text-raise:20pt"
+          >&nbsp;</i
+        >
+      <![endif]-->
+      <span style="mso-text-raise:10pt;font-weight:bold;">
+        Claim yours now
+      </span>
+      <!--[if mso]>
+        <i style="letter-spacing: 25px;mso-font-width:-100%">&nbsp;</i>
+      <![endif]-->
+    </a>
+  </p>
 </div>
-
 ```
 
- 
+#### 7. Two-Column Layout Reverse stacking
+
+Using the Css class `direction:rtl;` on the `<div class="two-col"` and the `<table role="presentation"` ghost table we add the attribute `dir="rtl"`
+Note: The inner`<div class="column"` inherit this property so they have to be reset using `direction:ltr;`
+
+#### 8. Adding a Three-Column Layout With Multiple Rows
+
+These will be centered on mobile the same way: text align on the container and display inline block the columns
+
+1. Here we have 2 rows and 3 columns in each row
+2. Everything else is identical to the two column but now we have width:220px for each cell
+
+```html
+<div class="three-col" style="font-size:0;text-align:center;">
+  <!--[if mso]>
+  <table role="presentation" width="100%" style="text-align:center;">
+  
+  <tr>
+      <td>
+      <![endif]-->
+  <div class="column"></div>
+  <!--[if mso]>
+      </td>
+
+      <td>
+      <![endif]-->
+  <div class="column"></div>
+  <!--[if mso]>
+      </td>
+      <td>
+      <![endif]-->
+  <div class="column"></div>
+  <!--[if mso]>
+      </td>
+  </tr>
+  
+  <tr>
+    <td>
+    <![endif]-->
+  <div class="column"></div>
+  <!--[if mso]>
+    </td>
+    <td>
+    <![endif]-->
+  <div class="column"></div>
+  <!--[if mso]>
+    </td>
+    <td>
+    <![endif]-->
+  <div class="column"></div>
+  <!--[if mso]>
+    </td>
+  </tr>
+
+  </table>
+  <![endif]-->
+</div>
+```
