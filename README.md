@@ -410,3 +410,72 @@ These will be centered on mobile the same way: text align on the container and d
   <![endif]-->
 </div>
 ```
+
+#### 8. How to create 
+
+
+
+
+##### Bullets 
+Tricker than you might think | [Source:](https://www.litmus.com/blog/the-ultimate-guide-to-bulleted-lists-in-html-email/). 
+They way to make them bulletproof across email clients:
+
+**Types of bullets:**
+Unordered list type options
+- disc (read as “bullet” • )
+- circle (read as “white circle” ○ )
+- square (read as “black square” ‎■ )
+Ordered list type options
+- 1 (default decimal numeral)
+- A (uppercase alphabet)
+- a (lowercase alphabet)
+- I (uppercase roman numeral)
+- i (lowercase roman numeral)
+
+```html
+<ul style="margin:0; margin-left: 25px; padding:0; font-family: Arial, sans-serif; color:#495055; font-size:16px; line-height:22px;" align="left" type="disc">
+    <li>
+        Unordered Disc Bullet
+    </li>
+</ul>
+ 
+<ol style="margin:0; margin-left: 25px; padding:0; font-family: Arial, sans-serif; color:#495055; font-size:16px; line-height:22px;" align="left" type="A">
+    <li>
+        Ordered Uppercase Alphabet Bullet
+    </li>
+</ol>
+
+```
+1. There is a `margin-left` to make sure the bullets are aligned with the rest of the email text 
+2. The one client that dose not need this margin-left is Gmail-webmail(not Gmail mobile)
+  
+```html
+// for gmail-web mail left margin bullets 
+<style>
+u + .body .glist { margin-left: 0 !important; }
+ 
+@media only screen and (max-width: 640px) {
+  u + .body .glist { margin-left: 25px !important; }
+}
+
+</style>
+
+```
+
+
+
+// Find snippets here
+//https://litmus.com/community/snippets or
+
+<body vlink="#FFFFFF"></body>
+
+<a href="#link" style="color:#ff6600;">Link 1</a>
+<!-- This will help to remove the purple color link on visited link on Outlook email -->
+
+
+
+// actual correct answer here
+https://stackoverflow.com/questions/13021345/trouble-with-ol-and-ul-tags-in-email-sent-with-outlook
+
+
+mimic ul with tables
