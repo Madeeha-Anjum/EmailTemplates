@@ -416,7 +416,7 @@ These will be centered on mobile the same way: text align on the container and d
 
 
 
-##### Bullets 
+##### 1. Bullets 
 Tricker than you might think | [Source:](https://www.litmus.com/blog/the-ultimate-guide-to-bulleted-lists-in-html-email/). 
 They way to make them bulletproof across email clients:
 
@@ -462,7 +462,20 @@ u + .body .glist { margin-left: 0 !important; }
 
 ```
 
+##### 2. Breaking long words 
+```html
+<tr>
+<td style="padding:10px;text-align:center;word-break:break-all;">
+   <p
+       style="margin:0;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:1.5;font-weight:400;text-decoration:none;vertical-align:baseline;font-style:normal;color:#2a2c2e">
+       Eg: Wireless_RFMacro_firstname.surname@telus.com_1
+   </p>
 
+</td>
+</tr>
+
+```
+1. use word break all for outlook 
 
 // Find snippets here
 //https://litmus.com/community/snippets or
